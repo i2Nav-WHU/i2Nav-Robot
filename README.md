@@ -10,7 +10,24 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 <img src="resources/rotated_model.gif" alt="rotated_robot" style="zoom: 50%;" />
 
-[toc]
+* [i2Nav-Robot: A Large-Scale Indoor-Outdoor Robot Dataset for Multi-Sensor Fusion Navigation and Mapping](#i2nav-robot-a-large-scale-indoor-outdoor-robot-dataset-for-multi-sensor-fusion-navigation-and-mapping)
+   * [News](#news)
+   * [Download Links](#download-links)
+   * [Sensor Setup](#sensor-setup)
+      * [Sensors Configuration](#sensors-configuration)
+      * [Time Synchronization](#time-synchronization)
+      * [Calibration](#calibration)
+   * [Ground-Truth System](#ground-truth-system)
+   * [Dataset Sequences](#dataset-sequences)
+      * [ROS Bag File](#ros-bag-file)
+      * [Raw Text Files](#raw-text-files)
+      * [Data units](#data-units)
+      * [Sequences](#sequences)
+   * [Tested Benchmark Systems](#tested-benchmark-systems)
+      * [Odometry Systems](#odometry-systems)
+      * [GNSS-based Systems](#gnss-based-systems)
+   * [License](#license)
+   * [Contact](#contact)
 
 ## News
 
@@ -38,10 +55,10 @@ We provide both Baidu Wangpan and OneDrive links for users' convenience. You may
 | Ublox F9P                                |                 🛰️GNSS                 | Multi-system supported<br />L1/L2 double frequency                                                                                    |       1       |         <img src="resources/sensor/f9p.jpg" alt="f9p" style="zoom:15%;" />         |
 | NovAtel OEM719                           |                 🛰️GNSS                 | Multi-system and multi-frequency supported                                                                                           |       1       |      <img src="resources/sensor/oem719.jpg" alt="oem719" style="zoom:15%;" />      |
 | AVT Mako-G234 (Stereo)                   |                 📷Camera                 | The resolution is configured as 1600*1200<br />Global shutter<br />Color mode                                                              |       10       |        <img src="resources/sensor/mako.jpg" alt="mako" style="zoom:10%;" />        |
-| Livox Mid360<br />(Built-in ICM40609)    |                 ⚡️LiDAR                 | Horizontal: 360°, Vertical: -7°~52°<br />0.1~40 m @ 10% reflectivity<br />Angular Precision < 0.15°<br />Non-repetitive scanning mode |       10       |      <img src="resources/sensor/mid360.jpg" alt="mid360" style="zoom:10%;" />      |
+| Livox Mid360<br />(Built-in ICM40609)    |                 ⚡️LiDAR                 | Horizontal: 360°, Vertical: -7°\~52°<br />0.1\~40 m @ 10% reflectivity<br />Angular Precision < 0.15°<br />Non-repetitive scanning mode |       10       |      <img src="resources/sensor/mid360.jpg" alt="mid360" style="zoom:10%;" />      |
 | TDK ICM40609                             |                   🧭IMU                   | 4.5 mdps/√Hz<br />100 ug/√Hz                                                                                                             |      200      |    <img src="resources/sensor/icm40609.jpg" alt="icm40609" style="zoom:15%;" />    |
-| Hesai AT128                              |                 ⚡️LiDAR                 | Horizontal: 120°, Vertical: -12.5°~12.9°<br />1~180 m @ 10% reflectivity<br />Angular Precision 0.1° * 0.2°                          |       10       |       <img src="resources/sensor/at128.jpg" alt="at128" style="zoom:10%;" />       |
-| Continental ARS548                       |                  📡Radar                  | Horizontal: 120°, Vertical: -20°~20°<br />Distance range: 0.2~300 m<br />Distance accuracy: ±0.15 m<br />Speed accuracy: 0.1 m/s      |       20       |     <img src="resources/sensor/ars548.jpg" alt="ars548" style="zoom: 25%;" />     |
+| Hesai AT128                              |                 ⚡️LiDAR                 | Horizontal: 120°, Vertical: -12.5°\~12.9°<br />1\~180 m @ 10% reflectivity<br />Angular Precision 0.1° * 0.2°                          |       10       |       <img src="resources/sensor/at128.jpg" alt="at128" style="zoom:10%;" />       |
+| Continental ARS548                       |                  📡Radar                  | Horizontal: 120°, Vertical: -20°\~20°<br />Distance range: 0.2\~300 m<br />Distance accuracy: ±0.15 m<br />Speed accuracy: 0.1 m/s      |       20       |     <img src="resources/sensor/ars548.jpg" alt="ars548" style="zoom: 25%;" />     |
 | AgileX Ranger MINI3                      | 🛞Odometer<br />(Wheel speeds and angles) | Speed resolution: 0.001 m/s<br />Angle resolution: 0.001 rad                                                                               |       50       | <img src="resources/sensor/rangermini3.jpg" alt="rangermini3" style="zoom:15%;" /> |
 | Cool Shark box                           |             ⏰PTP main clock             | 1.5 us @ 4 hr                                                                                                                              |       -       |  <img src="resources/sensor/coolshark.jpg" alt="rangermini3" style="zoom:15%;" />  |
 
@@ -83,7 +100,7 @@ The intrinsic and extrinsic parameters for stereo cameras are calibrated by MATL
 
 The time-delay parameters for ARS548 radar and Ranger odometer are calibrated by aligning their speed to the ground-truth speed.
 
-<img src="resources/apriltag.png" alt="apriltag.png" width="20%" height="20%" />
+<img src="resources/apriltag.png" alt="apriltag.png" width="25%" height="25%" />
 
 ## Ground-Truth System
 
@@ -93,7 +110,7 @@ For outdoor environments with good GNSS quality, the ground truth is generated b
 
 For indoor and GNSS-challenging environments, we use a LiDAR-based map-matching (MM) method to obtain positioning results, and the Hesai AT128 LiDAR is used. Here, the prebuilt point-cloud map is post-processed by a commercial LiDAR SLAM system, i.e. RS100i-MT from GoSLAM, as shown in the figure. The ground truth is generated by **post-processing MM/INS integration** using the MM positioning results and the navigation-grade IMU. The prebuilt point-cloud map in building environments is exhibited as follows.
 
-<img src="resources/sensor/goslam.jpg" alt="goslam" width="25%" height="25%" /><img src="resources/pointcloud-map.png" alt="pointcloud-map" width="30%" height="30%" />
+<img src="resources/sensor/goslam.jpg" alt="goslam" width="40%" height="40%" /><img src="resources/pointcloud-map.png" alt="pointcloud-map" width="50%" height="50%" />
 
 ## Dataset Sequences
 
