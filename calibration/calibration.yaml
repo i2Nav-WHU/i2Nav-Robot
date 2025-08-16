@@ -1,0 +1,104 @@
+# Calibration file for i2Nav-Robot dataset
+
+# TODO: The following IMU denotes the ADIS16465 in INS-Probe
+# The IMU frame is defined in the front-right-down coordinate
+
+adis16465:
+    # The position of GNSS antenna in the adis16465 frame (front-right-down)
+    gnss_lever: [0.0, -0.07, -0.365]
+
+    # The position of Ranger MINI center (on the floor) in the adis16465 frame (front-right-down)
+    odo_lever: [0.0, 0.0, 0.852]
+    # t_imu = t_odo + t_imu_odo
+    td_imu_odo: -0.01
+
+camera:
+    resolution: [1600, 1200]
+    # The pinhole camera and radial-tangential distortion models are used
+    model: pinhole-radtan
+
+    # t_imu = t_cam + t_imu_cam
+    # TODO: You must estimate the td online due to the frequently changed exposure time
+    td_imu_cam: 0.0
+
+    left:
+        # [fx, fy, cx, cy]
+        intrinsic: [1064.8950, 1065.2546, 801.4049, 624.6878]
+        # [k1, k2, p1, p2, k3]
+        distortions: [-0.1516, 0.0942, 0.000169, -0.000142, -0.0229]
+
+        # Pi = R_i_c * Pc + t_i_c
+        # R: cam to imu, t: cam in imu
+        T_imu_cam:
+            [
+                [0.00549192, -0.00206914, 0.99998278, 0.09],
+                [0.99998051, -0.00295932, -0.00549803, -0.2],
+                [0.00297065, 0.99999348, 0.00205284, -0.054],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        # R: cam to imu, [x, y, z, w]
+        q_imu_cam: [0.501597, 0.497367, 0.499880, 0.501145]
+        # t: cam in imu
+        t_imu_cam: [0.09, -0.2, -0.054]
+
+    right:
+        # [fx, fy, cx, cy]
+        intrinsics: [1063.2368, 1063.4470, 804.0671, 630.0190]
+        # [k1, k2, p1, p2, k3]
+        distortions: [-0.1517, 0.0959, -0.000104, -0.000018, -0.0238]
+
+    # Pr = R_r_l * Pl + t_r_l
+    # R: left to right, t: left in right
+    T_right_left:
+        [
+            [0.99990792, -0.00560789, -0.01235745, -0.4],
+            [0.00564202, 0.99998036, 0.00272787, 0.0],
+            [0.01234191, -0.00279734, 0.99991992, 0.0],
+            [0.0, 0.0, 0.0, 1.0],
+        ]
+
+lidar:
+    at128:
+        # Pi = R_i_l * Pl + t_i_l
+        # R: lidar to imu, t: lidar in imu
+        T_lidar_imu:
+            [
+                [0.99993817, -0.00770257, -0.00802099, 0.042],
+                [-0.0077132, -0.99996941, -0.00129509, -0.018],
+                [-0.00801077, 0.00135687, -0.99996699, -0.063],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        # R: lidar to imu, [x, y, z, w]
+        q_imu_lidar: [0.999984, -0.003854, -0.004008, 0.000663]
+        # t: lidar in imu
+        t_imu_lidar: [0.042, -0.018, -0.063]
+
+    mid360:
+        # Pi = R_i_l * Pl + t_i_l
+        # R: lidar to imu, t: lidar in imu
+        T_lidar_imu:
+            [
+                [0.99997669, 0.00548118, -0.00407184, 0.0],
+                [0.00549873, -0.99997558, 0.00431282, 0.0],
+                [-0.0040481, -0.00433511, -0.99998241, -0.159],
+                [0.0, 0.0, 0.0, 1.0],
+            ]
+        # R: lidar to imu, [x, y, z, w]
+        q_imu_lidar: [0.999984, -0.003854, -0.004008, 0.000663]
+        # t: lidar in imu
+        t_imu_lidar: [0.0, 0.0, -0.159]
+
+radar:
+    T_radar_imu:
+        [
+            [0.99987058, -0.00262433, -0.01587243, 0.066],
+            [-0.00262438, -0.99999654, 0.00001751, 0.0],
+            [-0.01587242, 0.00002415, -0.99987401, 0.092],
+            [0.0, 0.0, 0.0, 1.0],
+        ]
+    # R: radar to imu, [x, y, z, w]
+    q_imu_radar: [0.99996764, -0.00131222, -0.00793647, 0.00000166]
+    # t: radar in imu
+    t_imu_radar: [0.066, 0, 0.092]
+    # t_imu = t_radar + td_imu_radar
+    td_imu_radar: -0.1

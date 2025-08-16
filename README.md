@@ -31,14 +31,15 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20250816] Add the calibration file, and the download links. The dataset can be downloaded through [Baidu Wangpan](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p) or [OneDrive](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd)
 - [20250628] Create the GitHub Repository. The dataset will be released soon.
 
 ## Download Links
 
 We provide both Baidu Wangpan and OneDrive links for users' convenience. You may need about 450GB disk space to download the whole dataset.
 
-- For Baidu Wangpan, please download dataset from [this link]().
-- For OneDrive, please download dataset from [this link]().
+- For Baidu Wangpan, please download dataset from [this link](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p).
+- For OneDrive, please download dataset from [this link](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd).
 - The calibration file is provided along with this repository.
 
 ## Sensor Setup
