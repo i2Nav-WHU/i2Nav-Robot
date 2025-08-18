@@ -13,11 +13,12 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 * [i2Nav-Robot: A Large-Scale Indoor-Outdoor Robot Dataset for Multi-Sensor Fusion Navigation and Mapping](#i2nav-robot-a-large-scale-indoor-outdoor-robot-dataset-for-multi-sensor-fusion-navigation-and-mapping)
    * [News](#news)
    * [Download Links](#download-links)
+   * [Citation](#citation)
    * [Sensor Setup](#sensor-setup)
       * [Sensors Configuration](#sensors-configuration)
       * [Time Synchronization](#time-synchronization)
       * [Calibration](#calibration)
-   * [Ground-Truth System](#ground-truth-system)
+   * [Ground-truth System](#ground-truth-system)
    * [Dataset Sequences](#dataset-sequences)
       * [ROS Bag File](#ros-bag-file)
       * [Raw Text Files](#raw-text-files)
@@ -31,6 +32,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20250818] Add the preprint paper.
 - [20250816] Add the calibration file, and the download links. The dataset can be downloaded through [Baidu Wangpan](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p) or [OneDrive](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd)
 - [20250628] Create the GitHub Repository. The dataset will be released soon.
 
@@ -41,6 +43,12 @@ We provide both Baidu Wangpan and OneDrive links for users' convenience. You may
 - For Baidu Wangpan, please download dataset from [this link](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p).
 - For OneDrive, please download dataset from [this link](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd).
 - The calibration file is provided along with this repository.
+
+## Citation
+
+If you use i2Nav-Robot dataset in academic researches, please cite our paper.
+
+- Hailiang Tang, Tisheng Zhang, Liqiang Wang, Xin Ding, Man Yuan, Zhiyu Xiang, Jujin Chen, Yuhan Bian, Shuangyan Liu, Yuqing Wang, Guan Wang, and Xiaoji Niu, "i2Nav-Robot: A Large-Scale Indoor-Outdoor Robot Dataset for Multi-Sensor Fusion Navigation and Mapping," Aug. 15, 2025, *arXiv: arXiv:2508.11485*. doi: 10.48550/arXiv.2508.11485.
 
 ## Sensor Setup
 
@@ -70,10 +78,10 @@ We provide both Baidu Wangpan and OneDrive links for users' convenience. You may
 The GNSS is the time source for all the system, as shown in the following figure. The ground-truth system, INS-Probe, and Cool Shark box can maintain accurate clocks with their built-in crystal oscillators, even in GNSS-denied indoor environments. The Cool Shark box is the main clock for precision time protocol (PTP) through a local network switch. Hence, the cameras, LiDARs, and NVIDIA Orin can be synchronized to the absolute time with PTP. The ARS548 radar and AgileX chassis are also synchronized precisely even through software synchronization (using the system time when receiving the data), and this is because that the NVIDIA Orin has been synchronized. Besides, the fixed time delays for radar and odometer data can be calibrated offline. The synchronization method for different sensors are listed as follows:
 
 - **GNSS Synchronization**: Ground-truth system, i2Nav INS-Probe, NovAtel Receiver, and Cool Shark box.
-- **PTP Synchronization**:  AVT cameras*, Livox LiDAR, Hesai LiDAR, and NVIDIA Orin.
-- **Software Synchronization**:  AgileX chassis and Continental radar.
+- **PTP Synchronization**:  AVT cameras, Livox LiDAR, Hesai LiDAR, and NVIDIA Orin.
+- **Software Synchronization with Offline Calibration**:  AgileX chassis and Continental radar.
 
-*Note that the cameras are configured in auto-exposure mode. The time stamp for the image denotes the time when the camera is starting to expose, and thus the exposure time is not considered in the time stamp. We really recommend to online estimate the exposure time in your systems, especially for indoor-outdoor sequences.
+Note that the cameras are configured in auto-exposure mode. The time stamp for the image denotes the time when the camera is starting to expose, and thus the exposure time is not considered in the time stamp. We really recommend to online estimate the exposure time in your systems, especially for indoor-outdoor sequences.
 
 <img src="resources/time-sync-flow.png" alt="time-sync-flow" style="zoom: 25%;" />
 
@@ -99,11 +107,11 @@ def gps_time_to_unix_second(week, sow):
 
 The intrinsic and extrinsic parameters for stereo cameras are calibrated by MATLAB 2024b using an apriltag board, as shown below. The relative positions for all sensors are obtained from their 3D models, while the relative rotations are not explicitly calibrated. Nevertheless, we provide the camera-IMU and LiDAR-IMU extrinsic parameters (only rotation parameters are estimated), which are online estimated by the open-sourced [LE-VINS](https://github.com/i2Nav-WHU/LE-VINS) and [FF-LINS](https://github.com/i2Nav-WHU/FF-LINS). Besides, the camera-LiDAR extrinsic parameters are calculated with the estimated camera-IMU and LiDAR-IMU extrinsic parameters.
 
-The time-delay parameters for ARS548 radar and Ranger odometer are calibrated by aligning their speed to the ground-truth speed.
+The fixed time offsets for ARS548 radar and Ranger odometer are calibrated by aligning their speed to the ground-truth speed.
 
 <img src="resources/apriltag.png" alt="apriltag.png" width="25%" height="25%" />
 
-## Ground-Truth System
+## Ground-truth System
 
 The employed ground-truth system is a navigation-grade IMU. The ground-truth accuracy is about **0.02 m for position** and **0.01 deg for attitude**. Note that the ground-truth position, velocity, and attitude are all projected to the **center of ADIS16465 IMU**.
 
