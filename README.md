@@ -32,6 +32,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20250901] Add the frame definition for ICM40609 (Built-in IMU of Mid360).
 - [20250818] Add the preprint paper.
 - [20250816] Add the calibration file, and the download links. The dataset can be downloaded through [Baidu Wangpan](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p) or [OneDrive](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd)
 - [20250628] Create the GitHub Repository. The dataset will be released soon.
@@ -153,6 +154,8 @@ The contained topics in the ROS (ROS1) bag file are listed in the table.
 | /continental/ars548/object         |  📡Radar  |       20       |   sensor_msgs::PointCloud2   |   ars548   |
 | /insprobe/ranger/odometer          | 🛞Odometer |       50       |   insprobe_msgs::Odometer   |   ranger   |
 
+Note that the mid360_imu frame is defined as the front-right-down frame, which is transformed from the original front-left-up frame.
+
 We use standard sensor messages from the ROS package except for the following messages:
 
 - **insprobe_msgs::Imu**: Use the insprobe_msgs package in this repository.
@@ -168,7 +171,7 @@ The formats of the provided raw text files can be found in the following table.
 | *_ADIS16465_IMU.txt |     🧭IMU     | ADIS16465 IMU data                                   | t, dtheta (xyz), dvel (xyz)                           |                                                            |
 | *_F9P_GNSS.pos      |    🛰️GNSS    | F9P positioning data (single point positioning, SPP) | t, lat, lon, alt, std (lat, lon, alt)                 | Unavailable for indoor sequences.                          |
 | *_groundtruth.nav   | 🧭Ground truth | Ground-truth navigation results                      | t, pos (local NED), vel (NED), att (roll, pitch, yaw) | NED: north-east-down                                       |
-| *_MID360_IMU.txt    |     🧭IMU     | IMU data from the MID360 LiDAR                       | t, dtheta (xyz), dvel (xyz)                           |                                                            |
+| *_MID360_IMU.txt    |     🧭IMU     | IMU data from the MID360 LiDAR                       | t, dtheta (xyz), dvel (xyz)                           | x: front; y: right; z: down |
 | *_OEM7_GNSS.pos     |    🛰️GNSS    | OEM719 positioning data (real time kinematic, RTK)   | t, lat, lon, alt, std (lat, lon, alt)                 | Unavailable for indoor sequences.                          |
 | *_RANGER_ODO.txt    |   🛞Odometer   | Odometer data from the Ranger chassis                | t, wheel speed (1234), wheel angle (1234)             | 1: left front, 2: right front, 3: left back, 4: right back |
 | *_trajectory.csv    | 🧭Ground truth | Ground-truth trajectory                              | t, pos (local NED), quat (xyzw)                       | TUM format |
