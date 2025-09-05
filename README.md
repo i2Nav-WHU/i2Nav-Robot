@@ -32,6 +32,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20250905] Add descriptions for the time stamp of raw text files.
 - [20250901] Add the frame definition for ICM40609 (Built-in IMU of Mid360).
 - [20250818] Add the preprint paper.
 - [20250816] Add the calibration file, and the download links. The dataset can be downloaded through [Baidu Wangpan](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p) or [OneDrive](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd)
@@ -85,24 +86,6 @@ The GNSS is the time source for all the system, as shown in the following figure
 Note that the cameras are configured in auto-exposure mode. The time stamp for the image denotes the time when the camera is starting to expose, and thus the exposure time is not considered in the time stamp. We really recommend to online estimate the exposure time in your systems, especially for indoor-outdoor sequences.
 
 <img src="resources/time-sync-flow.png" alt="time-sync-flow" style="zoom: 25%;" />
-
-The GNSS time (GPS time) is composed of the week and the seconds of week (SOW). The time stamp of the ROS message, i.e. the unix second, can be converted to the GNSS time using the following codes.
-
-```python
-import math as m
-
-# GPS is now ahead of UTC by 18 seconds
-GPS_LEAP_SECOND = 18
-
-def unix_second_to_gps_time(seconds):
-    second_gps = seconds + GPS_LEAP_SECOND - 315964800
-    week = m.floor(second_gps / 604800)
-    sow = second_gps - week * 604800
-    return week, sow
-
-def gps_time_to_unix_second(week, sow):
-    return sow + week * 604800 + 315964800 - GPS_LEAP_SECOND
-```
 
 ### Calibration
 
@@ -175,6 +158,24 @@ The formats of the provided raw text files can be found in the following table.
 | *_OEM7_GNSS.pos     |    🛰️GNSS    | OEM719 positioning data (real time kinematic, RTK)   | t, lat, lon, alt, std (lat, lon, alt)                 | Unavailable for indoor sequences.                          |
 | *_RANGER_ODO.txt    |   🛞Odometer   | Odometer data from the Ranger chassis                | t, wheel speed (1234), wheel angle (1234)             | 1: left front, 2: right front, 3: left back, 4: right back |
 | *_trajectory.csv    | 🧭Ground truth | Ground-truth trajectory                              | t, pos (local NED), quat (xyzw)                       | TUM format |
+
+Note that the time stamp for raw text files is expressed as the GNSS seconds of week (SOW) for convenience. The GNSS time (GPS time) is composed of the week and the SOW. The time stamp of the ROS message, i.e. the UNIX second, can be converted to the GNSS time using the following codes.
+
+```python
+import math as m
+
+# GPS is now ahead of UTC by 18 seconds
+GPS_LEAP_SECOND = 18
+
+def unix_second_to_gps_time(seconds):
+    second_gps = seconds + GPS_LEAP_SECOND - 315964800
+    week = m.floor(second_gps / 604800)
+    sow = second_gps - week * 604800
+    return week, sow
+
+def gps_time_to_unix_second(week, sow):
+    return sow + week * 604800 + 315964800 - GPS_LEAP_SECOND
+```
 
 ### Data units
 
