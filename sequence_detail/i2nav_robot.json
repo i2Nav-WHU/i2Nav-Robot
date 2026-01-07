@@ -1,0 +1,82 @@
+{
+    "descriptions": {
+        "duration": "Time duration in seconds",
+        "length": "Trajectory length in meters",
+        "ground truth": {
+            "MM/INS": "Map Matching/Inertial Navigation System Integration",
+            "GNSS/INS": "Global Navigation Satellite System/Inertial Navigation System Integration"
+        }
+    },
+    "sequences": {
+        "building00": {
+            "duration": 1201,
+            "length": 1673,
+            "scene": "outdoor",
+            "challenge": "GNSS degenerated",
+            "ground truth": "MM/INS"
+        },
+        "building01": {
+            "duration": 1369,
+            "length": 1730,
+            "scene": "indoor/outdoor",
+            "challenge": "illumination",
+            "ground truth": "MM/INS"
+        },
+        "building02": {
+            "duration": 2110,
+            "length": 2522,
+            "scene": "outdoor",
+            "challenge": "dynamic",
+            "ground truth": "GNSS/INS"
+        },
+        "parking00": {
+            "duration": 1141,
+            "length": 1583,
+            "scene": "indoor/outdoor",
+            "challenge": "illumination",
+            "ground truth": "MM/INS"
+        },
+        "parking01": {
+            "duration": 1060,
+            "length": 1224,
+            "scene": "indoor",
+            "challenge": "motion blur",
+            "ground truth": "MM/INS"
+        },
+        "parking02": {
+            "duration": 1257,
+            "length": 1442,
+            "scene": "indoor",
+            "challenge": "motion blur",
+            "ground truth": "MM/INS"
+        },
+        "playground00": {
+            "duration": 1786,
+            "length": 1711,
+            "scene": "outdoor",
+            "challenge": "structureless",
+            "ground truth": "GNSS/INS"
+        },
+        "street00": {
+            "duration": 1380,
+            "length": 1668,
+            "scene": "outdoor",
+            "challenge": "dynamic",
+            "ground truth": "GNSS/INS"
+        },
+        "street01": {
+            "duration": 1520,
+            "length": 1660,
+            "scene": "outdoor",
+            "challenge": "dynamic",
+            "ground truth": "GNSS/INS"
+        },
+        "street02": {
+            "duration": 1380,
+            "length": 1847,
+            "scene": "outdoor",
+            "challenge": "dynamic",
+            "ground truth": "GNSS/INS"
+        }
+    }
+}

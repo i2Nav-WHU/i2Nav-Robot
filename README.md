@@ -11,6 +11,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 <img src="resources/rotated_model.gif" alt="rotated_robot" style="zoom: 50%;" />
 
 * [i2Nav-Robot: A Large-Scale Indoor-Outdoor Robot Dataset for Multi-Sensor Fusion Navigation and Mapping](#i2nav-robot-a-large-scale-indoor-outdoor-robot-dataset-for-multi-sensor-fusion-navigation-and-mapping)
+   * [Important Notes](#important-notes)
    * [News](#news)
    * [Download Links](#download-links)
    * [Citation](#citation)
@@ -30,8 +31,18 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
    * [License](#license)
    * [Contact](#contact)
 
+## Important Notes
+
+- **Provided**
+  - The [calibration file](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/calibration), [sequence details](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/sequence_detail), [datasheets](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/datasheet), and [sha256sum](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/sha256sum) are provided in this repository.
+
+- **Not provided**
+  - The prebuilt **point-cloud maps** and **GNSS raw observations** (pseudorange, carrier phase, and Doppler) will not be available due to policy reasons.
+  - **Semantic annotations** are not included in this dataset.
+
 ## News
 
+- [20260117] Add more dataset information, including sequence details, sha256sum for ROS bag files, and AprilTag configuration file.
 - [20250905] Add descriptions for the time stamp of raw text files.
 - [20250901] Add the frame definition for ICM40609 (Built-in IMU of Mid360).
 - [20250818] Add the preprint paper.
@@ -44,7 +55,6 @@ We provide both Baidu Wangpan and OneDrive links for users' convenience. You may
 
 - For Baidu Wangpan, please download dataset from [this link](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p).
 - For OneDrive, please download dataset from [this link](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd).
-- The calibration file is provided along with this repository.
 
 ## Citation
 
