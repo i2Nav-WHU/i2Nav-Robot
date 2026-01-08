@@ -37,6 +37,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
   - The dataset can be downloaded through [Baidu Wangpan](https://pan.baidu.com/s/1UGZI-LvoTKxH6GN6JbzMZw?pwd=hs6p) or [OneDrive](https://1drv.ms/f/c/7da41598f6f07e02/EgJ-8PaYFaQggH3CBQAAAAABlmP45s_NHaBuLd3xXk04AA?e=sMNBhd).
   - The [calibration file](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/calibration), [sequence details](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/sequence_detail), [datasheets](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/datasheet), and [sha256sum](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/sha256sum) are provided in this repository.
   - The **configuration files** and **modified source codes** for baseline methods is available at [i2Nav-Robot-Baseline](https://github.com/i2Nav-WHU/i2Nav-Robot-Baseline).
+  - The [odometer speed file](https://github.com/i2Nav-WHU/i2Nav-Robot/blob/main/odo_speed) derived from the four wheel speeds and angles.
   
 - **Not provided**
   - The prebuilt **point-cloud maps** and **GNSS raw observations** (pseudorange, carrier phase, and Doppler) will not be available due to policy reasons.
@@ -44,6 +45,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20260108] Add calculated odometer speed files, and fix the orders of the left and right wheels.
 - [20260108] Add the link for configuration files of baseline methods.
 - [20260107] Add more dataset information, including sequence details, sha256sum for ROS bag files, and AprilTag configuration file.
 - [20250905] Add descriptions for the time stamp of raw text files.
@@ -148,15 +150,17 @@ The contained topics in the ROS (ROS1) bag file are listed in the table.
 | /hesai/at128/points                | ⚡️LiDAR |       10       |   sensor_msgs::PointCloud2   |   at128   |
 | /continental/ars548/detection      |  📡Radar  |       20       |   sensor_msgs::PointCloud2   |   ars548   |
 | /continental/ars548/object         |  📡Radar  |       20       |   sensor_msgs::PointCloud2   |   ars548   |
-| /insprobe/ranger/odometer          | 🛞Odometer |       50       |   insprobe_msgs::Odometer   |   ranger   |
+| /insprobe/ranger/odometer         | 🛞Odometer |       50       |   insprobe_msgs::RangerOdometer   |   ranger   |
 
 Note that the mid360_imu frame is defined as the front-right-down frame, which is transformed from the original front-left-up frame.
 
 We use standard sensor messages from the ROS package except for the following messages:
 
 - **insprobe_msgs::Imu**: Use the insprobe_msgs package in this repository.
-- **insprobe_msgs::Odometer**: Use the insprobe_msgs package in this repository.
+- **insprobe_msgs::RangerOdometer**: Use the insprobe_msgs package in this repository.
 - **livox_ros_driver::CustomMsg**: Please install the [livox_ros_driver2](https://github.com/Livox-SDK/livox_ros_driver2) package.
+
+**!!!Cautions!!!**: The orignal orders in **insprobe_msgs::RangerOdometer** message are incorrect, and the left and right wheels are used reversely by mistake. When using the topic /insprobe/ranger/odometer in the ROS bag files, you should exchange the data from the left and the right wheels.
 
 ### Raw Text Files
 
@@ -169,7 +173,8 @@ The formats of the provided raw text files can be found in the following table.
 | *_groundtruth.nav   | 🧭Ground truth | Ground-truth navigation results                      | t, pos (local NED), vel (NED), att (roll, pitch, yaw) | NED: north-east-down                                       |
 | *_MID360_IMU.txt    |     🧭IMU     | IMU data from the MID360 LiDAR                       | t, dtheta (xyz), dvel (xyz)                           | x: front; y: right; z: down |
 | *_OEM7_GNSS.pos     |    🛰️GNSS    | OEM719 positioning data (real time kinematic, RTK)   | t, lat, lon, alt, std (lat, lon, alt)                 | Unavailable for indoor sequences.                          |
-| *_RANGER_ODO.txt    |   🛞Odometer   | Odometer data from the Ranger chassis                | t, wheel speed (1234), wheel angle (1234)             | 1: left front, 2: right front, 3: left back, 4: right back |
+| *_RANGER_ODO.txt    |   🛞Odometer   | Odometer data from the Ranger chassis                | t, wheel speed (1234), wheel angle (1234)             | 1: right front, 2: left front, 3: right back, 4: left back |
+| *_ODO_SPEED.txt | 🛞Odometer | Calculated odometer speed in the vehicle frame | t, odometer speed | Included in this repository. |
 | *_trajectory.csv    | 🧭Ground truth | Ground-truth trajectory                              | t, pos (local NED), quat (xyzw)                       | TUM format |
 
 Note that the time stamp for raw text files is expressed as the GNSS seconds of week (SOW) for convenience. The GNSS time (GPS time) is composed of the week and the SOW. The time stamp of the ROS message, i.e. the UNIX second, can be converted to the GNSS time using the following codes.
