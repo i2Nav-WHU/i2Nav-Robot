@@ -45,6 +45,7 @@ The Intelligent and Integrated Navigation (i2Nav) group from the GNSS Research C
 
 ## News
 
+- [20250116] Add the GNSS availability property in the sequence-detail file.
 - [20260108] Add calculated odometer speed files, and fix the orders of the left and right wheels.
 - [20260108] Add the link for configuration files of baseline methods.
 - [20260107] Add more dataset information, including sequence details, sha256sum for ROS bag files, and AprilTag configuration file.
